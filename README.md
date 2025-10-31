@@ -1,1 +1,3 @@
 # jtavr
+
+pages for VR
