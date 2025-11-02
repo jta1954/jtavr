@@ -12,17 +12,38 @@
       <!-- 64x64 SVG with 1px black lines on white -->
       <img id="gridtex" crossorigin="anonymous"
         src='data:image/svg+xml;utf8,
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-  <rect width="64" height="64" fill="white"/>
-  <path d="M0 0H64 M0 16H64 M0 32H64 M0 48H64" stroke="black" stroke-width="1"/>
-  <path d="M0 0V64 M16 0V64 M32 0V64 M48 0V64" stroke="black" stroke-width="1"/>
-</svg>'>
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+        <rect width="64" height="64" fill="white"/>
+        <path d="M0 0H64 M0 16H64 M0 32H64 M0 48H64" stroke="black" stroke-width="1"/>
+        <path d="M0 0V64 M16 0V64 M32 0V64 M48 0V64" stroke="black" stroke-width="1"/>
+      </svg>'>
     </a-assets>
 
+    <script>
+      AFRAME.registerComponent('uv-scroll', {
+        schema: { x: {default: 0}, y: {default: -0.1} }, // tiles per second
+        tick: function (t, dt) {
+          const mesh = this.el.getObject3D('mesh');
+          if (!mesh) return;
+          const mat = mesh.material;
+          if (!mat || !mat.map) return;
+    
+          const map = mat.map;
+          // ensure repeat wrapping
+          map.wrapS = map.wrapT = THREE.RepeatWrapping;
+    
+          const dx = this.data.x * (dt/1000);
+          const dy = this.data.y * (dt/1000);
+          map.offset.x = (map.offset.x + dx) % 1;
+          map.offset.y = (map.offset.y + dy) % 1;
+        }
+      });
+    </script>
+    
     <a-cylinder
       radius="1.25" height="1000" open-ended="true"
-      material="side: back; src: #gridtex; repeat: 80 800; offset: 0 0; metalness: 0; roughness: 1; color: #fff"
-      animation="property: material.offset; to: 0 -1; loop: true; dur: 6000; easing: linear">
+      material="side: back; src: #gridtex; repeat: 80 800; color: #fff; metalness: 0; roughness: 1"
+      uv-scroll="x: 0; y: -0.2">
     </a-cylinder>
 
     <a-entity camera look-controls position="0 1.6 0"></a-entity>
