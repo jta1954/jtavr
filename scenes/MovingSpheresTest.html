@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>test stockdata • A-Frame</title>
+    <meta name="description" content="test stockdata! • A-Frame" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene background="color: #000000">
+      <a-assets></a-assets>
+    </a-scene>
+
+    <script>
+      var nrspheres = 0;
+      var nrsteps = 24;
+      var lines = "";
+
+      var request = new XMLHttpRequest();
+      request.open(
+        "GET",
+        "3Ddata.csv",
+        true
+      );
+      request.onreadystatechange = function() {
+        if (request.readyState === 4 && request.status === 200) {
+          var type = request.getResponseHeader("Content-Type");
+          if (type.indexOf("text") !== 1) {
+            lines = request.responseText.split("\n");
+            nrspheres = lines.length;
+            runthespheres(nrsteps);
+          }
+        }
+      };
+      request.send(null);
+
+      function runthespheres(steps) {
+        initaxes();
+        initspheres();
+        let k = 0;let t = 0;
+        function render() {
+          t += 0.03;
+          requestAnimationFrame(render);
+          if (t > 1) {
+            t = 0;k += 1;if (k > (nrspheres-steps)) k = 0;
+            
+            last = k+steps;if (last > nrspheres) last = nrspheres;
+            showspheres(k, last)
+          }
+        }
+        render();
+      }
+      
+      function initaxes() {
+        console.log('axes');
+        let scene = document.querySelector("a-scene");
+        
+        let xaxis = document.createElement("a-entity");
+        xaxis.setAttribute("line", "start: -2, 0, 0; end: 2 0 0");
+        xaxis.setAttribute("color", "white");
+        scene.appendChild(xaxis);
+        
+        let yaxis = document.createElement("a-entity");
+        yaxis.setAttribute("line", "start: 0, -2, 0; end: 0 2 0");
+        yaxis.setAttribute("color", "white");
+        scene.appendChild(yaxis);
+        
+        let zaxis = document.createElement("a-entity");
+        zaxis.setAttribute("line", "start: 0, 0, -2; end: 0 0 2");
+        zaxis.setAttribute("color", "white");
+        scene.appendChild(zaxis);
+      }
+        
+      function initspheres() {
+        let scene = document.querySelector("a-scene");
+        var i;
+        console.log('initialization');
+        for (i = 0; i < nrspheres; i++) {
+          dat = lines[i].split(",");
+
+          let sphere = document.createElement("a-sphere");
+          sphere.setAttribute("color", "#888888");
+          if (dat[0] == -2) sphere.setAttribute("color", "#FF0000");
+          if (dat[0] == -1) sphere.setAttribute("color", "#FF8800");
+          if (dat[0] == 0) sphere.setAttribute("color", "#FFFF00");
+          if (dat[0] == 1) sphere.setAttribute("color", "#00FF00");
+          if (dat[0] == 2) sphere.setAttribute("color", "#008800");
+          sphere.setAttribute("radius", "0.025");
+          sphere.setAttribute("position", { x: dat[1], y: dat[2], z: dat[3] });
+          sphere.setAttribute("id", "sphere" + i);
+          sphere.setAttribute("visible", false);
+          scene.appendChild(sphere);
+        }
+      }
+
+      function showspheres(frst, last) {
+        var i, op;
+        for (i = 0; i < nrspheres; i++) {
+          sphere = document.getElementById("sphere" + i);
+          sphere.setAttribute("visible", false);
+          if (i >= frst && i < last) {
+            sphere.setAttribute("visible", true);
+            op = (i - frst) / nrsteps;
+            sphere.setAttribute("opacity", op)
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
