@@ -1,0 +1,10 @@
+<script>
+AFRAME.registerComponent('no-foveation', {
+  init() {
+    const r = this.el.renderer;
+    if (r && r.xr && r.xr.setFoveation) {
+      r.xr.setFoveation(0); // 0 = no foveation, 1 = strong
+    }
+  }
+});
+</script>
