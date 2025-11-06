@@ -1,4 +1,18 @@
 <script>
+AFRAME.registerComponent('max-aniso', {
+  init() {
+    const el = this.el;
+    el.addEventListener('materialtextureloaded', () => {
+      const r = el.sceneEl.renderer;
+      const map = el.getObject3D('mesh')?.material?.map;
+      if (r && map) {
+        map.anisotropy = r.capabilities.getMaxAnisotropy();
+        map.needsUpdate = true;
+      }
+    });
+  }
+});
+
 AFRAME.registerComponent('no-foveation', {
   init() {
     const r = this.el.renderer;
