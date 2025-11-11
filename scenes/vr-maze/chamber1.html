@@ -51,7 +51,13 @@
       <!-- WEST wall: at x = -1.24, face inward (rotate +90° around Y so normal points +x) -->
       <a-plane position="-1.25 1.0 0" rotation="0 90 0" width="2.5" height="2.0"
                material="src: #img-west; side: front"></a-plane>
-
+      <script>
+          ['north','south','east','west'].forEach(dir=>{
+            const img = document.getElementById('img-'+dir);
+            img.addEventListener('load', ()=>console.log(dir,'loaded', img.naturalWidth+'x'+img.naturalHeight));
+            img.addEventListener('error', ()=>console.warn(dir,'FAILED to load:', img.src));
+          });
+      </script>
     </a-scene>
   </body>
 </html>
