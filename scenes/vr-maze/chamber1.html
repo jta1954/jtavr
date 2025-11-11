@@ -21,6 +21,10 @@
       <a-entity light="type: ambient; intensity: 0.7"></a-entity>
       <a-entity light="type: directional; intensity: 0.6" position="1 3 2"></a-entity>
 
+      <!-- Add controller entities -->
+      <a-entity id="leftHand"  laser-controls="hand: left"></a-entity>
+      <a-entity id="rightHand" laser-controls="hand: right"></a-entity>
+
       <!-- Player camera (inside the chamber) -->
       <a-entity position="0 -0.5 0">
         <a-camera wasd-controls look-controls></a-camera>
@@ -51,6 +55,23 @@
       <!-- WEST wall: at x = -1.24, face inward (rotate +90° around Y so normal points +x) -->
       <a-plane position="-1.24 1.0 0" rotation="0 90 0" width="2.5" height="2.0"
                material="src: #img-west; side: front"></a-plane>
+
+      <script>
+        // LEFT controller
+        const left = document.getElementById('leftHand');
+        left.addEventListener('triggerdown',  () => console.log('Left trigger pressed'));
+        left.addEventListener('triggerup',    () => console.log('Left trigger released'));
+        left.addEventListener('gripdown',     () => console.log('Left grip pressed'));
+        left.addEventListener('gripup',       () => console.log('Left grip released'));
+
+      // RIGHT controller
+        const right = document.getElementById('rightHand');
+        right.addEventListener('triggerdown', () => console.log('Right trigger pressed'));
+        right.addEventListener('triggerup',   () => console.log('Right trigger released'));
+        right.addEventListener('gripdown',    () => console.log('Right grip pressed'));
+        right.addEventListener('gripup',      () => console.log('Right grip released'));
+      </script>
+      
       <script>
           ['north','south','east','west'].forEach(dir=>{
             const img = document.getElementById('img-'+dir);
