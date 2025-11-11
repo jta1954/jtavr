@@ -11,10 +11,10 @@
       <!-- Preload the four wall images -->
       <a-assets>
         <!-- Put these files in ./pictures/ -->
-        <img id="img-north" src="pictures/east.jpg" crossorigin="anonymous" />
-        <img id="img-south" src="pictures/west.jpg" crossorigin="anonymous" />
-        <img id="img-east"  src="pictures/north.jpg"  crossorigin="anonymous" />
-        <img id="img-west"  src="pictures/south.jpg"  crossorigin="anonymous" />
+        <img id="img-north" src="pictures/north.jpg" crossorigin="anonymous" />
+        <img id="img-south" src="pictures/south.jpg" crossorigin="anonymous" />
+        <img id="img-east"  src="pictures/east.jpg"  crossorigin="anonymous" />
+        <img id="img-west"  src="pictures/west.jpg"  crossorigin="anonymous" />
       </a-assets>
 
       <!-- Simple lighting -->
@@ -45,11 +45,11 @@
                material="src: #img-south; side: front"></a-plane>
 
       <!-- EAST wall: at x = +1.24, face inward (rotate -90° around Y so normal points -x) -->
-      <a-plane position="1.24 1.0 0" rotation="0 90 0" width="2.5" height="2.0"
+      <a-plane position="-1.24 1.0 0" rotation="0 -90 0" width="2.5" height="2.0"
                material="src: #img-east; side: front"></a-plane>
 
       <!-- WEST wall: at x = -1.24, face inward (rotate +90° around Y so normal points +x) -->
-      <a-plane position="-1.24 1.0 0" rotation="0 -90 0" width="2.5" height="2.0"
+      <a-plane position="1.24 1.0 0" rotation="0 90 0" width="2.5" height="2.0"
                material="src: #img-west; side: front"></a-plane>
       <script>
           ['north','south','east','west'].forEach(dir=>{
