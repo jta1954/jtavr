@@ -34,17 +34,17 @@
       <a-plane rotation="-90 0 0" position="0 0 0" width="2.5" height="2.5" color="#2b2b2b"></a-plane>
 
       <!-- Optional ceiling (uncomment if you want it closed) -->
-      <a-plane rotation="90 0 0" position="0 2.0 0" width="2.5" height="2.5" color="#1a1a1a"></a-plane>
+      <a-plane rotation="90 0 0" position="0 2.0 0" width="2.5" height="2.5" color="#2b2b2b"></a-plane>
 
       <!-- WALLS (as planes with images), chamber centered at (0, 0, 0)
            Room size: 2.5 (width) x 2.5 (length), height: 2.0
            Walls are 2.5m wide, 2.0m tall, placed at ±1.25m from center. -->
 
-      <!-- NORTH wall: at z = -1.24, face inward (rotate 180° around Y) -->
+      <!-- NORTH wall: at z = +1.24, face inward (rotate 180° around Y) -->
       <a-plane position="0 1.0 1.24" rotation="0 180 0" width="2.5" height="2.0"
                material="src: #img-north; side: front"></a-plane>
 
-      <!-- SOUTH wall: at z = +1.24, default faces -z (into room), no rotation -->
+      <!-- SOUTH wall: at z = -1.24, default faces -z (into room), no rotation -->
       <a-plane position="0 1.0 -1.24" rotation="0 0 0" width="2.5" height="2.0"
                material="src: #img-south; side: front"></a-plane>
 
