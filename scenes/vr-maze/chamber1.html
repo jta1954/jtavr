@@ -79,6 +79,22 @@
             img.addEventListener('error', ()=>console.warn(dir,'FAILED to load:', img.src));
           });
       </script>
+      
+      <div id="logbox"
+           style="position:fixed;bottom:0;left:0;right:0;
+                  background:rgba(0,0,0,.6);color:#0f0;
+                  font:14px monospace;max-height:40%;overflow:auto;z-index:9999"></div>
+      
+      <script>
+        const box = document.getElementById('logbox');
+        function addLine(msg){
+          box.innerText += msg + "\n";
+          box.scrollTop = box.scrollHeight;
+        }
+        const _log = console.log;
+        console.log = (...a)=>{_log(...a);addLine(a.join(' '));};
+      </script>
+      
     </a-scene>
   </body>
 </html>
